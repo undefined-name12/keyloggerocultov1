@@ -6,7 +6,7 @@ El registrador de teclas Full Stealth (disfrazado de WindowsExplorer) es un **re
 Además, el script garantiza la persistencia mediante:
 - **Moviéndonos** a `C:\Users\<usuario>\AppData\Roaming\WindowsExplorer.exe`
 - **Añadiendo una entrada al registro de Windows** para la ejecución al inicio
-- **Ejecutándose **silenciosamente en segundo plano** sin consola visible**
+- Ejecutándose **silenciosamente en segundo plano** sin consola visible
 
 ## **Características**
 
